@@ -5,9 +5,8 @@
   "main": "index.js",
 "scripts": {
   "dev": "node index.js",
-  "start": "node index.js",
-  "build": "prisma generate",
-  "postinstall": "npm run build",
+  "start": "npm run postinstall && node index.js",
+  "postinstall": "prisma generate",
   "test": "echo \"Error: no test specified\" && exit 1"
 },
 
