@@ -50,6 +50,42 @@ const atualizarStatus = async (req, res) => {
   }
 };
 
+async function buscarPorNome(req, res) {
+  const nome = req.params.nome;
+  try {
+    const clientes = await prisma.cliente.findMany({
+      where: {
+        nome: {
+          contains: nome,
+          mode: 'insensitive'
+        }
+      }
+    });
+    res.json(clientes);
+  } catch (error) {
+    res.status(500).json({ erro: "Erro ao buscar cliente por nome" });
+  }
+}
+
+
+async function buscarPorId(req, res) {
+  const { id } = req.params;
+  try {
+    const cliente = await prisma.cliente.findUnique({
+      where: { id: parseInt(id) }
+    });
+
+    if (!cliente) {
+      return res.status(404).json({ erro: "Cliente não encontrado" });
+    }
+
+    res.json(cliente);
+  } catch (error) {
+    res.status(500).json({ erro: "Erro ao buscar cliente por ID" });
+  }
+}
+
+
 module.exports = {
   listarClientes,
   cadastrarCliente,
