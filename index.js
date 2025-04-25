@@ -2,29 +2,32 @@ const express = require("express");
 const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 
-
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/users', async (req, res) => {
+app.get('/clientes', async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
-    res.json(users);
+    const clientes = await prisma.cliente.findMany();
+    res.json(clientes);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao listar usuários' });
+    console.error(error); // exibe erro no console do Render
+    res.status(500).json({ error: 'Erro ao listar clientes' });
   }
 });
 
-app.post('/users', async (req, res) => {
+app.post('/clientes', async (req, res) => {
   try {
-    const { name, email } = req.body;
-    const newUser = await prisma.user.create({ data: { name, email } });
-    res.json(newUser);
+    const { nome, email, telefone, status } = req.body;
+    const novoCliente = await prisma.cliente.create({
+      data: { nome, email, telefone, status }
+    });
+    res.json(novoCliente);
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar usuário' });
+    console.error(error); // ajuda no debug
+    res.status(500).json({ error: 'Erro ao criar cliente' });
   }
 });
 
@@ -32,4 +35,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
 
