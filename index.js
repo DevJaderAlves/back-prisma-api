@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const { PrismaClient } = require("@prisma/client");
+const clienteRoutes = require('./routes/clientes');
 
 const app = express();
-const prisma = new PrismaClient();
+
+app.use('/clientes', clienteRoutes);
 
 app.use(cors());
 app.use(express.json());
@@ -13,7 +14,7 @@ app.get('/clientes', async (req, res) => {
     const clientes = await prisma.cliente.findMany();
     res.json(clientes);
   } catch (error) {
-    console.error(error); // exibe erro no console do Render
+    console.error("Erro detalhado:", error); // exibe erro no console do Render
     res.status(500).json({ error: 'Erro ao listar clientes' });
   }
 });
