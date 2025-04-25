@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
-  "scripts": {
-    "dev": "node index.js",
-    "start": "node index.js",
-    "postinstall": "prisma generate",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "dev": "node index.js",
+  "start": "node index.js",
+  "build": "prisma generate",
+  "postinstall": "npm run build",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
