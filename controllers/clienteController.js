@@ -67,7 +67,6 @@ async function buscarPorNome(req, res) {
   }
 }
 
-
 async function buscarPorId(req, res) {
   const { id } = req.params;
   try {
@@ -85,6 +84,24 @@ async function buscarPorId(req, res) {
   }
 }
 
+async function atualizarCliente(req, res) {
+  const { id } = req.params;
+  const { nome, email, telefone, status } = req.body;
+
+  try {
+    const clienteAtualizado = await prisma.cliente.update({
+      where: { id: Number(id) },
+      data: { nome, email, telefone, status }
+    });
+
+    res.json(clienteAtualizado);
+  } catch (error) {
+    console.error('Erro ao atualizar cliente:', error);
+    res.status(500).send('Erro ao atualizar cliente');
+  }
+}
+
+
 
 module.exports = {
   listarClientes,
@@ -92,6 +109,7 @@ module.exports = {
   excluirCliente,
   atualizarStatus,
   buscarPorNome,
-  buscarPorId
+  buscarPorId,
+  atualizarCliente
 };
 
