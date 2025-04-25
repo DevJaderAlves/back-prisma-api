@@ -54,6 +54,8 @@ module.exports = {
   listarClientes,
   cadastrarCliente,
   excluirCliente,
-  atualizarStatus
+  atualizarStatus,
+  buscarPorNome,
+  buscarPorId
 };
 
